@@ -1,0 +1,163 @@
+********************************Importation of database:********************************************
+
+CREATE DATABASE Projet;
+USE Projet;
+CREATE TABLE Base 
+(CODE_service_CH float(10),
+Reference_document float(10),
+1_Articles_CGI float(10),
+2_Articles_CGI float(10),
+3_Articles_CGI float(10),
+4_Articles_CGI FLOAT (10),
+5_Articles_CGI FLOAT (10),
+No_disposition INT (10), 
+Date_mutation VARCHAR(10),
+Nature_mutation VARCHAR(50),
+Valeur_fonciere VARCHAR(10),
+No_voie float(10),
+B_T_Q VARCHAR (10),
+Type_de_voie VARCHAR(50),
+Code_voie VARCHAR(10),
+Voie VARCHAR(50),
+Code_postal FLOAT(20),
+Commune VARCHAR(50),
+Code_departement VARCHAR(20),
+Code_commune INT(20),
+Prefixe_de_section float(20),
+Section VARCHAR(20),
+No_plan INT(20),
+No_Volume VARCHAR(20),
+1er_lot VARCHAR(20),
+Surface_Carrez_du_1er_lot VARCHAR(20),
+2eme_lot VARCHAR(20),
+Surface_Carrez_du_2eme_lot VARCHAR(20),
+3eme_lot VARCHAR(20),
+Surface_Carrezu_du_3eme_lot VARCHAR(20),
+4eme_lot VARCHAR(20),
+Surface_Carrez_du_4eme_lot VARCHAR(20),
+5eme_lot VARCHAR(20),
+Surface_Carrez_du_5eme_lot VARCHAR(20),
+Nombre_de_lots INT(20),
+Code_type_local float(20),
+Type_local VARCHAR(50),
+Identifiant_local float(20),
+Surface_reelle_bati float(20),
+Nombre_pieces_principales float(20),
+Nature_culture VARCHAR(20),importation
+Nature_culture_speciale VARCHAR(20),
+Surface_terrain float(50));
+
+LOAD DATA LOCAL INFILE 'C:/Users/33758/Desktop/Exam/valeursfoncieres_2017.txt'
+INTO ValeurS_foncière_2017 (for exemple )
+
+************Creation different table*****************************************************
+**********Table Localisation**********
+1st step:Creation
+Use projet;
+Create table Localisation(Code_postal int PRIMARY KEY, 
+Commune varchar (50), 
+Id _local int 
+Code_voie int , 
+Numero_voie int,
+Type_de_voie int,
+Departement varchar(50))
+
+2nd step: Insertion 
+Insert into Localisation 
+Select Code_postal ,
+Commune, Id local , 
+Code voie , 
+Numero voie,
+Type de voie,
+Code postal,
+Commune,
+Departement 
+from Base
+Group by Id local;
+
+
+**********Table Characteristic of local**********
+1rst Step: Creation 
+Use Projet 
+Create table Characteristique_of_local(Id_local int PRIMARY KEY,
+Type_local Varchar(50)
+Surface_reelle_batis int,
+Nombre_pieces_principales int,
+Nature_culture_special int,
+Surface_terrain int,
+1_er_lot int,
+2_ieme_lot int,
+3_ieme_lot int,
+Numero_volume_1_er_lot int,
+Numero_volume_2_ieme_lot int,
+Numero_volume_3_ieme lot int)
+
+
+Second step: Insertion 
+Insert into Characteristique_of_local
+Select Id_local,
+Type_local ,
+Surface reelle batis ,
+Nombre pieces principales,
+Nature culture special,
+Surface terrain int,
+1 er lot ,
+2 ieme lot,
+3 ieme lot,
+Numero volume 1 er lot,
+Numero volume 2 ieme lot,
+Numero volume 3 ieme lot
+from Base 
+Group by Id local
+
+********** Table Administration**********
+1st step: Creation 
+Use projet
+Create table Administration (Code_service int PRIMARY KEY,
+id_local int,
+Reference_document int,
+Section int ,
+Prefixe_de_section int,
+1_Article_CGI int ,
+2_Article_CGI int,
+3_Article_CGI int ,
+4_Article_CGI int,
+5_Article_CGI int,
+Numero_plan int)
+
+2nd step : Insertion 
+Insert into Administration
+Select Code service,
+id local ,
+Reference document,
+Section,
+Prefixe de section ,
+1_Article_CGI,
+2_Article_CGI,
+3_Article_CGI,
+4_Article_CGI,
+5_Article_CGI,
+Numero plan
+from Base 
+Group by Id local as Administration;
+
+**********Mutation********
+1rst step: Creation 
+Create Mutation(  
+Id_mutation INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+Nature_mutation Varchar(50),
+Id_local int ,
+Numero_disposition int,
+Date_muatation date,
+Valeur_fonciere float)
+
+2nd step : Insertion 
+Insert into Mutation
+Select Id mutation, 
+Nature mutation ,
+Id local ,
+Numero disposition,
+Date muatation,
+Valeur fonciere
+from Base 
+Group by Id local as Mutation;
